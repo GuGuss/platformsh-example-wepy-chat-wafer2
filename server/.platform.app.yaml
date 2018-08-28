@@ -1,0 +1,31 @@
+name: server
+type: nodejs:10
+
+hooks:
+  build: |
+    npm install pm2 nodemon -g
+    npm install && cd -
+    npm install platformsh@0.0.1 && cd -
+
+    cp patches/config.js .
+  deploy: |
+    node tools/initdb.js && cd -
+
+web:
+  commands:
+    start: "PM2_HOME=$PLATFORM_APP_DIR/run pm2 start app.js --no-daemon"
+  locations:
+    "/weapp/":
+      passthru: true
+      root: "server"
+      # Whether to allow files not matching a rule or not.
+      allow: false
+
+relationships:
+  database: "mydatabase:mysql"
+
+mounts:
+  "/run": "shared:files/run"
+
+disk: 512
+

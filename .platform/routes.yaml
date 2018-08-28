@@ -1,0 +1,7 @@
+"https://{default}/":
+    type: upstream
+    upstream: "wepy:http"
+
+"https://{default}/weapp":
+    type: upstream
+    upstream: "server:http"

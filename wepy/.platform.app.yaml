@@ -1,0 +1,26 @@
+name: wepy
+type: nodejs:10
+
+hooks:
+  build: |
+    npm install wepy-cli -g
+    npm install
+
+    cp patches/wepy-web/lib/wx.js node_modules/wepy-web/lib/wx.js
+
+    wepy build --output web
+
+web:
+  commands:
+    start: "sleep 30"
+  locations:
+    "/":
+      passthru: false
+      root: "web"
+      # Whether to allow files not matching a rule or not.
+      allow: true
+      index:
+        - index.html
+
+disk: 512
+
