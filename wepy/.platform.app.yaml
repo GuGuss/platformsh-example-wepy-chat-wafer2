@@ -10,6 +10,9 @@ hooks:
 
     wepy build --output web
 
+    # Copy images and mocks
+    cp -r dist/. web/
+
 web:
   commands:
     start: "sleep 30"
